@@ -1,7 +1,12 @@
 <div class="face-snap-card" [ngClass]="{ snapped: buttonText === 'Je n\'aime pas' }">
+    <a routerLink="/galerie">Retour</a>
     <h2>{{ oeuvre.titre | titlecase }}</h2>
     <h4>{{ oeuvre.auteur | titlecase }}</h4>
     <p>{{ oeuvre.date | date: 'yyyy'}} - {{oeuvre.courant}}<p>
     <img [src]="oeuvre.imageUrl" [alt]="oeuvre.titre">
-    <button (click)="onViewOeuvre()">Plus d'informations</button>
+    <p>{{ oeuvre.description }}</p>
+    <p>
+      <button (click)="onLike()">{{ buttonText }}</button>
+      <span [ngStyle]="{ color: 'rgb(0, ' + oeuvre.like + ', 0)' }">🤌 {{ oeuvre.like }}</span>
+    </p>
   </div>

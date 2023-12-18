@@ -2,6 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 import { Oeuvre } from '../models/oeuvre.model';
 import { CommonModule } from '@angular/common';
 import { OeuvresService } from '../services/oeuvres.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-oeuvre',
@@ -14,7 +15,7 @@ export class OeuvreComponent implements OnInit {
   @Input() oeuvre!: Oeuvre;
   buttonText!: string;
 
-  constructor(private oeuvresService: OeuvresService) {}
+  constructor(private oeuvresService: OeuvresService,private route: Router) {}
 
   ngOnInit(){
     this.buttonText = "J'aime !";
@@ -27,6 +28,10 @@ export class OeuvreComponent implements OnInit {
     } else {
         this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"unlike");
         this.buttonText = "J'aime !";
+    }
   }
-}
+
+  onViewOeuvre() {
+    this.route.navigateByUrl(`galerie/${this.oeuvre.id}`);
+  }
 }
