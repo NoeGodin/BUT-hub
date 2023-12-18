@@ -1,24 +1,32 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
 import { Oeuvre } from '../models/oeuvre.model';
+import { CommonModule } from '@angular/common';
+import { OeuvresService } from '../services/oeuvres.service';
 
 @Component({
   selector: 'app-oeuvre',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './oeuvre.component.html',
   styleUrl: './oeuvre.component.scss'
 })
-export class OeuvreComponent {
-  @Input() oeuvre: Oeuvre;
-  buttonText: string;
+export class OeuvreComponent implements OnInit {
+  @Input() oeuvre!: Oeuvre;
+  buttonText!: string;
+
+  constructor(private oeuvresService: OeuvresService) {}
+
+  ngOnInit(){
+    this.buttonText = "J'aime !";
+  }
 
   onLike() {
-    if (this.buttonText === 'Oh Snap!') {
-      this.snaps++;
-      this.buttonText = 'Oops, unSnap!';
+    if (this.buttonText === "J'aime !") {
+        this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"like");
+        this.buttonText = "Je n'aime pas";
     } else {
-      this.snaps--;
-      this.buttonText = 'Oh Snap!';
-    }
+        this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"unlike");
+        this.buttonText = "J'aime !";
   }
+}
 }
