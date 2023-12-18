@@ -1,0 +1,11 @@
+<div class="face-snap-card" [ngClass]="{ snapped: buttonText === 'Oops, unSnap!' }">
+    <h2>{{ oeuvre.titre | titlecase }}</h2>
+    <h4>{{ oeuvre.auteur | titlecase }}</h4>
+    <p>{{ oeuvre.date | date: 'yyyy'}} - {{oeuvre.courant}}<p>
+    <img [src]="oeuvre.imageURL" [alt]="oeuvre.titre">
+    <p>{{ oeuvre.description }}</p>
+    <p>
+      <button (click)="onLike()">{{ buttonText }}</button>
+      <span [ngStyle]="{ color: 'rgb(0, ' + oeuvre.like + ', 0)' }">🤌 {{ oeuvre.like }}</span>
+    </p>
+  </div>
