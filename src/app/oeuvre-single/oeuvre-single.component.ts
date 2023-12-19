@@ -22,17 +22,27 @@ export class OeuvreSingleComponent implements OnInit {
 
   ngOnInit(): void {
     this.buttonText = "J'aime !";
-    const snapId = +this.route.snapshot.params['id'];
-    this.oeuvre = this.oeuvresService.OeuvreById(snapId);
+    const oeuvreId = this.route.snapshot.params['id'];
+    console.log("id de l'oeuvre cliqué :"+oeuvreId);
+    this.oeuvresService.OeuvreById(oeuvreId).subscribe(oeuvre => {
+      if (!oeuvre) {
+        console.error('Oeuvre not found!');
+        return;
+      }
+  
+      this.oeuvre = oeuvre;
+    });
   }
 
   onLike() {
     if (this.buttonText === "J'aime !") {
         this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"like");
         this.buttonText = "Je n'aime pas";
+        this.oeuvre.like++;
     } else {
         this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"unlike");
         this.buttonText = "J'aime !";
+        this.oeuvre.like--;
     }
   }
 

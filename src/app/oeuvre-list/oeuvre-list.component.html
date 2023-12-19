@@ -1,1 +1,12 @@
-<app-oeuvre *ngFor="let o of oeuvres$" [oeuvre]="o" | async></app-oeuvre>
+<!-- Ajout de l'index alphabétique -->
+<div class="alphabet-index">
+  <a *ngFor="let lettre of alphabet" (click)="naviguerVersLettre(lettre)">{{ lettre }}</a>
+</div>
+
+<!-- Affichage des œuvres par sections alphabétiques -->
+<div *ngFor="let lettre of alphabet">
+  <h2 id="{{ lettre.toLowerCase() }}"></h2>
+  <ng-container *ngFor="let oeuvre of oeuvres">
+      <app-oeuvre [oeuvre]="oeuvre" *ngIf="getNomDeFamille(oeuvre.auteur).startsWith(lettre)"></app-oeuvre>
+  </ng-container>
+</div>

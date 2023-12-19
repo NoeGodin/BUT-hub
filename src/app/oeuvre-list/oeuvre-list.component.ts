@@ -13,11 +13,39 @@ import { CommonModule } from '@angular/common';
 })
 export class OeuvreListComponent implements OnInit{
   oeuvres !: Oeuvre[];
-  
+  alphabet: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
   constructor(private oeuvresService: OeuvresService) { }
 
   ngOnInit(): void {
-    this.oeuvres = this.oeuvresService.getAllOeuvres();
-  } 
+    this.oeuvresService.getAllOeuvres().subscribe(oeuvres => {
+      this.oeuvres = oeuvres;
+      this.trierParNomDeFamille();
+    })
+  }
+
+  trierParNomDeFamille(): void {
+    this.oeuvres.sort((a, b) => {
+      const nomA = this.getNomDeFamille(a.auteur);
+      const nomB = this.getNomDeFamille(b.auteur);
+
+      // Comparaison des noms de famille
+      return nomA.localeCompare(nomB);
+    });
+  }
+
+  getNomDeFamille(auteur: string): string {
+    // Récupération du nom de famille (partie après l'espace)
+    const nomComplet = auteur.split(' ');
+    return nomComplet.length > 1 ? nomComplet[nomComplet.length - 1] : auteur;
+  }
+
+  naviguerVersLettre(lettre: string): void {
+    const lettreMinuscule = lettre.toLowerCase();
+    const section = document.getElementById(lettreMinuscule);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
 }

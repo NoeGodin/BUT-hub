@@ -1,5 +1,5 @@
   export class Oeuvre {
-    id!: number;
+    id!: string;
     titre!: string;
     auteur!: string;
     imageUrl!: string;

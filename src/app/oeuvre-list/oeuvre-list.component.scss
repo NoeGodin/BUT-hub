@@ -1,0 +1,20 @@
+.alphabet-index {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    max-height: 80vh; /* Set a maximum height */
+    overflow-y: auto; /* Add vertical scroll if needed */
+    background-color: #f0f0f0; /* optional background color */
+    border: 1px solid #ccc; /* optional border */
+}
+
+.alphabet-index a {
+    margin: 5px;
+    text-decoration: none;
+    color: #333; /* optional text color */
+}
