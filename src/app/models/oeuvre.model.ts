@@ -4,7 +4,7 @@
     auteur!: string;
     imageUrl!: string;
     description!: string;
-    date!: Date;
+    date!: string;
     courant!: string;
     like!: number
     date2?: Date;

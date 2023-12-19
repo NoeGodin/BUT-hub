@@ -2,7 +2,7 @@
     <a routerLink="/galerie">Retour</a>
     <h2>{{ oeuvre.titre | titlecase }}</h2>
     <h4>{{ oeuvre.auteur | titlecase }}</h4>
-    <p>{{ oeuvre.date | date: 'yyyy'}} - {{oeuvre.courant}}<p>
+    <p>{{ oeuvre.date}} - {{oeuvre.courant}}<p>
     <img [src]="oeuvre.imageUrl" [alt]="oeuvre.titre">
     <p>{{ oeuvre.description }}</p>
     <p>

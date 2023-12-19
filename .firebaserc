@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "noe-dev-d5835": {
+      "hosting": {
+        "noe-dev": [
+          "noe-dev-d5835"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "noe-dev-d5835"
+  }
+}

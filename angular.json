@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Gallery": {
+    "noe-dev": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -39,7 +39,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/gallery",
+            "outputPath": "dist/noe-dev",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -75,7 +75,13 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.development.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -84,10 +90,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "Gallery:build:production"
+              "buildTarget": "noe-dev:build:production"
             },
             "development": {
-              "buildTarget": "Gallery:build:development"
+              "buildTarget": "noe-dev:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -95,7 +101,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "Gallery:build"
+            "buildTarget": "noe-dev:build"
           }
         },
         "test": {
@@ -116,6 +122,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "noe-dev:build:production",
+              "serveTarget": "noe-dev:serve:production"
+            },
+            "development": {
+              "buildTarget": "noe-dev:build:development",
+              "serveTarget": "noe-dev:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
