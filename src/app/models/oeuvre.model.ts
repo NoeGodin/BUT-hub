@@ -7,5 +7,4 @@
     date!: string;
     courant!: string;
     like!: number
-    date2?: Date;
   }

@@ -16,7 +16,7 @@ import * as fr from '@angular/common/locales/fr';
     providers:[{provide: LOCALE_ID,useValue: 'fr-FR'}]
 })
 export class AppComponent {
-  title = 'Noé Dev';
+  title = 'Noé Devazdz';
   constructor() {
     registerLocaleData(fr.default);
   }

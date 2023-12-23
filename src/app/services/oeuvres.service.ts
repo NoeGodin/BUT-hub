@@ -4,12 +4,14 @@ import { CollectionReference, Firestore, collectionData, doc } from '@angular/fi
 import { addDoc, collection, getDocs } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OeuvresService {
   private firestore: Firestore = inject(Firestore);
+  private storage: Storage = inject(Storage);
   oeuvres$: Observable<Oeuvre[]>;
 
   constructor() {
@@ -28,9 +30,36 @@ export class OeuvresService {
     );
   }
 
-  addPlace(oeuvre: Oeuvre) {
+  addOeuvre(oeuvre: Oeuvre) {
     const placeRef = collection(this.firestore, 'oeuvres');
-    return addDoc(placeRef, oeuvre);
+
+  // Convert Oeuvre object to plain JavaScript object
+  const oeuvreData = {
+    titre: oeuvre.titre,
+    auteur: oeuvre.auteur,
+    imageUrl: oeuvre.imageUrl,
+    description: oeuvre.description,
+    date: oeuvre.date,
+    courant: oeuvre.courant,
+    like: 0,
+  };
+
+  return addDoc(placeRef, oeuvreData);
+  }
+
+  saveOeuvre(input: HTMLInputElement):string {
+    if (!input.files) return "";
+
+    const files: FileList = input.files;
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files.item(i);
+        if (file) {
+            const storageRef = ref(this.storage, file.name);
+            uploadBytesResumable(storageRef, file);
+        }
+    }
+    return "fait"
   }
 
   OeuvreLikeById(oeuvreId: string, likeType: 'like' | 'unlike'): void {

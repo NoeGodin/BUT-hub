@@ -38,11 +38,9 @@ export class OeuvreSingleComponent implements OnInit {
     if (this.buttonText === "J'aime !") {
         this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"like");
         this.buttonText = "Je n'aime pas";
-        this.oeuvre.like++;
     } else {
         this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"unlike");
         this.buttonText = "J'aime !";
-        this.oeuvre.like--;
     }
   }
 

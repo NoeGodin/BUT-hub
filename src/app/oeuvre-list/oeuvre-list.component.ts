@@ -3,6 +3,7 @@ import { Oeuvre } from '../models/oeuvre.model';
 import { OeuvreComponent } from "../oeuvre/oeuvre.component";
 import { OeuvresService } from '../services/oeuvres.service';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-oeuvre-list',
@@ -15,29 +16,17 @@ export class OeuvreListComponent implements OnInit{
   oeuvres !: Oeuvre[];
   alphabet: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  constructor(private oeuvresService: OeuvresService) { }
+  constructor(private oeuvresService: OeuvresService,private router: Router) { }
 
   ngOnInit(): void {
     this.oeuvresService.getAllOeuvres().subscribe(oeuvres => {
       this.oeuvres = oeuvres;
-      this.trierParNomDeFamille();
+      this.trierParTitre();
     })
   }
 
-  trierParNomDeFamille(): void {
-    this.oeuvres.sort((a, b) => {
-      const nomA = this.getNomDeFamille(a.auteur);
-      const nomB = this.getNomDeFamille(b.auteur);
-
-      // Comparaison des noms de famille
-      return nomA.localeCompare(nomB);
-    });
-  }
-
-  getNomDeFamille(auteur: string): string {
-    // Récupération du nom de famille (partie après l'espace)
-    const nomComplet = auteur.split(' ');
-    return nomComplet.length > 1 ? nomComplet[nomComplet.length - 1] : auteur;
+  trierParTitre(): void {
+    this.oeuvres.sort((a, b) => a.titre.localeCompare(b.titre));
   }
 
   naviguerVersLettre(lettre: string): void {
@@ -46,6 +35,10 @@ export class OeuvreListComponent implements OnInit{
     if (section) {
       section.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  }
+
+  ouvrirFormulaire(): void {
+    this.router.navigateByUrl('suggestion');
   }
 
 }
