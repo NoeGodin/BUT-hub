@@ -1,26 +1,26 @@
 import { Injectable, inject } from '@angular/core';
 import { Oeuvre } from '../models/oeuvre.model';
-import { CollectionReference, Firestore, collectionData, doc } from '@angular/fire/firestore';
-import { addDoc, collection, getDocs } from 'firebase/firestore';
+import { Firestore, collectionData, } from '@angular/fire/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Storage, ref, uploadBytesResumable } from '@angular/fire/storage';
+import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class OeuvresService {
-  private firestore: Firestore = inject(Firestore);
-  private storage: Storage = inject(Storage);
   oeuvres$: Observable<Oeuvre[]>;
+  private storage: Storage = inject(Storage);
 
-  constructor() {
+  constructor(private firestore: Firestore) {
     const oeuvresCollection = collection(this.firestore, 'oeuvres');
     this.oeuvres$ = collectionData(oeuvresCollection,{ idField: 'id' }) as Observable<Oeuvre[]>;
-
   }
 
   getAllOeuvres(): Observable<Oeuvre[]> {
+    this.oeuvres$.forEach(oeuvre => console.log(oeuvre))
     return this.oeuvres$;
   }
 
@@ -32,35 +32,56 @@ export class OeuvresService {
 
   addOeuvre(oeuvre: Oeuvre) {
     const placeRef = collection(this.firestore, 'oeuvres');
-
-  // Convert Oeuvre object to plain JavaScript object
-  const oeuvreData = {
-    titre: oeuvre.titre,
-    auteur: oeuvre.auteur,
-    imageUrl: oeuvre.imageUrl,
-    description: oeuvre.description,
-    date: oeuvre.date,
-    courant: oeuvre.courant,
-    like: 0,
-  };
+    const oeuvreData = {
+      titre: oeuvre.titre,
+      auteur: oeuvre.auteur,
+      imageUrl: oeuvre.imageUrl,
+      description: oeuvre.description,
+      date: oeuvre.date,
+      courant: oeuvre.courant,
+      like: 0,
+    };
 
   return addDoc(placeRef, oeuvreData);
   }
 
-  saveOeuvre(input: HTMLInputElement):string {
-    if (!input.files) return "";
-
-    const files: FileList = input.files;
-
-    for (let i = 0; i < files.length; i++) {
-        const file = files.item(i);
-        if (file) {
-            const storageRef = ref(this.storage, file.name);
-            uploadBytesResumable(storageRef, file);
+  uploadFile(input: HTMLInputElement): Promise<string[]> {
+    return new Promise((resolve, reject) => {
+        if (!input.files) {
+            reject(new Error('Aucun fichier sélectionné.'));
+            return;
         }
-    }
-    return "fait"
-  }
+
+        const files: FileList = input.files;
+        const downloadURLs: string[] = [];
+
+        const uploadPromises = Array.from(files).map((file) => {
+            const storageRef = ref(this.storage, 'Galerie/' + file.name);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+
+            return new Promise<void>((fileResolve, fileReject) => {
+                uploadTask.then((snapshot) => {
+                    getDownloadURL(storageRef).then((downloadURL) => {
+                        downloadURLs.push(downloadURL);
+                        fileResolve();
+                    }).catch((error) => {
+                        fileReject(error);
+                    });
+                }).catch((error) => {
+                    fileReject(error);
+                });
+            });
+        });
+
+        Promise.all(uploadPromises)
+            .then(() => {
+                resolve(downloadURLs);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
 
   OeuvreLikeById(oeuvreId: string, likeType: 'like' | 'unlike'): void {
     this.OeuvreById(oeuvreId).subscribe(oeuvre => {

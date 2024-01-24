@@ -1,12 +1,11 @@
 <div class="suggestion-form">
   <h2>Ajouter une oeuvre</h2>
-  <form (ngSubmit)="ajouterOeuvre()" #oeuvreForm="ngForm">
+  <form #oeuvreForm="ngForm" (ngSubmit)="onSubmit()">
     <label for="titre">Titre:</label>
     <input type="text" id="titre" [(ngModel)]="nouvelleOeuvre.titre" name="titre" required>
 
     <label for="auteur">Auteur:</label>
     <input type="text" id="auteur" [(ngModel)]="nouvelleOeuvre.auteur" name="auteur" required>
-
 
     <label for="description">Description:</label>
     <textarea id="description" [(ngModel)]="nouvelleOeuvre.description" name="description" required></textarea>
@@ -18,9 +17,8 @@
     <input type="text" id="courant" [(ngModel)]="nouvelleOeuvre.courant" name="courant" required>
 
     <label for="fileUpload">Choose a File</label>
-        <input id="fileUpload" type="file" #upload>
-        <button (click)="saveImage(upload)">Upload</button>
+    <input id="fileUpload" type="file" (change)="uploadFile($event)" name="file" #upload required>
 
-    <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid ? '#007bff' : '#ccc'}" [disabled]="!oeuvreForm.form.valid">Add Oeuvre</button>
+    <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid ? '#007bff' : '#ccc'}" [disabled]="!oeuvreForm.form.valid || !nouvelleOeuvre.imageUrl">Add Oeuvre</button>
   </form>
 </div>

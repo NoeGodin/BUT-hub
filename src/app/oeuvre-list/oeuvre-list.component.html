@@ -7,7 +7,7 @@
 <div *ngFor="let lettre of alphabet">
   <h2 id="{{ lettre.toLowerCase() }}"></h2>
   <ng-container *ngFor="let oeuvre of oeuvres">
-      <app-oeuvre [oeuvre]="oeuvre" *ngIf="oeuvre.titre.startsWith(lettre)"></app-oeuvre>
+      <app-oeuvre [oeuvre]="oeuvre" *ngIf="oeuvre.titre.toUpperCase().startsWith(lettre)"></app-oeuvre>
   </ng-container>
 </div>
 

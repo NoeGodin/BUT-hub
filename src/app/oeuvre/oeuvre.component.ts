@@ -18,17 +18,8 @@ export class OeuvreComponent implements OnInit {
   constructor(private oeuvresService: OeuvresService,private route: Router) {}
 
   ngOnInit(){
-    this.buttonText = "J'aime !";
-  }
 
-  onLike() {
-    if (this.buttonText === "J'aime !") {
-        this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"like");
-        this.buttonText = "Je n'aime pas";
-    } else {
-        this.oeuvresService.OeuvreLikeById(this.oeuvre.id,"unlike");
-        this.buttonText = "J'aime !";
-    }
+    console.log("oeuvre",this.oeuvre.titre)
   }
 
   onViewOeuvre() {

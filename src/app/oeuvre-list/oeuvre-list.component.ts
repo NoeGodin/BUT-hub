@@ -20,6 +20,7 @@ export class OeuvreListComponent implements OnInit{
 
   ngOnInit(): void {
     this.oeuvresService.getAllOeuvres().subscribe(oeuvres => {
+      console.log("oeuvres",oeuvres)
       this.oeuvres = oeuvres;
       this.trierParTitre();
     })
