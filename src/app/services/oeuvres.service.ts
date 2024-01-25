@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Oeuvre } from '../models/oeuvre.model';
-import { Firestore, collectionData, } from '@angular/fire/firestore';
-import { addDoc, collection } from 'firebase/firestore';
+import { Firestore, collectionData, doc, } from '@angular/fire/firestore';
+import { addDoc, collection, increment, updateDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fire/storage';
@@ -20,7 +20,6 @@ export class OeuvresService {
   }
 
   getAllOeuvres(): Observable<Oeuvre[]> {
-    this.oeuvres$.forEach(oeuvre => console.log(oeuvre))
     return this.oeuvres$;
   }
 
@@ -42,7 +41,7 @@ export class OeuvresService {
       like: 0,
     };
 
-  return addDoc(placeRef, oeuvreData);
+    return addDoc(placeRef, oeuvreData);
   }
 
   uploadFile(input: HTMLInputElement): Promise<string[]> {
@@ -83,19 +82,23 @@ export class OeuvresService {
     });
 }
 
-  OeuvreLikeById(oeuvreId: string, likeType: 'like' | 'unlike'): void {
-    this.OeuvreById(oeuvreId).subscribe(oeuvre => {
-      if (!oeuvre) {
-        console.error('Oeuvre not found!');
-        return;
-      }
-      if (likeType === 'like') {
-        console.error('Like');
-        oeuvre.like++;
-      } else {
-        console.error('UnLike');
-        oeuvre.like--;
-      }
-    });
+  OeuvreLikeById(oeuvreId: string, likeType: 'like' | 'unlike') {
+    const oeuvreRef = doc(this.firestore, 'oeuvres', oeuvreId)
+
+    if (likeType === 'like') {
+      updateDoc(oeuvreRef, { like: increment(1)});
+    } else {
+      updateDoc(oeuvreRef, { like: increment(-1)});
+    }
+  }
+
+  getLikedOeuvresFromLocalStorage(): string[] {
+    const likedOeuvres = localStorage.getItem('likedOeuvres');
+    return likedOeuvres ? JSON.parse(likedOeuvres) : [];
+  }
+
+  isLikedOeuvreFromLocalSorage(oeuvreId:string): boolean{
+    const likedOeuvres = this.getLikedOeuvresFromLocalStorage();
+    return likedOeuvres.includes(oeuvreId);
   }
 }

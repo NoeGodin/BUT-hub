@@ -1,4 +1,4 @@
-<div class="face-snap-card" [ngClass]="{ snapped: buttonText === 'Je n\'aime pas' }">
+<div *ngIf="oeuvre" class="oeuvre-card" [ngClass]="{ liked: buttonText === 'Je n\'aime plus' }">
     <a routerLink="/galerie">Retour</a>
     <h2>{{ oeuvre.titre | titlecase }}</h2>
     <h4>{{ oeuvre.auteur | titlecase }}</h4>
@@ -7,6 +7,6 @@
     <p><span style="font-weight: bold;">Description</span>: {{ oeuvre.description }}</p>
     <p>
       <button (click)="onLike()">{{ buttonText }}</button>
-      <span [ngStyle]="{ color: 'rgb(0, ' + oeuvre.like + ', 0)' }">🤌 {{ oeuvre.like }}</span>
+      <span [ngStyle]="{ color: 'rgb(0, ' + oeuvre.like + ', 0)' }">{{ oeuvre.like }}👍</span>
     </p>
   </div>

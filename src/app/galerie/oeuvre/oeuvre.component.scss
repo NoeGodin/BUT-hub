@@ -1,4 +1,4 @@
-.face-snap-card {
+.oeuvre-card {
   box-sizing: border-box;
   width: 50%; 
   margin: 20px auto;
@@ -38,8 +38,15 @@ button {
   outline: none;
   font-size: 14px;
   font-weight: 500;
+  margin:10px;
   &:active {
       transform: translate(1px, 1px);
       box-shadow: lightgray 0 0 5px;
   }
+}
+
+.oeuvre-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

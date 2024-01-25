@@ -1,9 +1,12 @@
-<div class="face-snap-card">
-    <h2>{{ oeuvre.titre | titlecase }}</h2>
-    <h4>{{ oeuvre.auteur | titlecase }}</h4>
-    <p>{{ oeuvre.date }} - {{oeuvre.courant | titlecase}}</p>
-    <div class="image-container">
-      <img [src]="oeuvre.imageUrl" [alt]="oeuvre.titre | titlecase">
-    </div>
-    <button (click)="onViewOeuvre()">Plus d'informations</button>
+<div class="oeuvre-card">
+  <h2>{{ oeuvre.titre | titlecase }}</h2>
+  <h4>{{ oeuvre.auteur | titlecase }}</h4>
+  <p>{{ oeuvre.date }} - {{oeuvre.courant | titlecase}}</p>
+  <div class="image-container">
+    <img [src]="oeuvre.imageUrl" [alt]="oeuvre.titre | titlecase">
   </div>
+  <div class="oeuvre-options">
+    <button (click)="onViewOeuvre()">Plus d'informations</button>
+    <p *ngIf="likeStatus"[ngStyle]="{ color: 'rgb(0,100, 0)' }">Vous aimez ce tableau !</p>
+  </div>
+</div>
