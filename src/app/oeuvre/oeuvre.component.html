@@ -1,7 +1,0 @@
-<div class="face-snap-card" [ngClass]="{ snapped: buttonText === 'Je n\'aime pas' }">
-    <h2>{{ oeuvre.titre | titlecase }}</h2>
-    <h4>{{ oeuvre.auteur | titlecase }}</h4>
-    <p>{{ oeuvre.date }} - {{oeuvre.courant | titlecase}}<p>
-    <img [src]="oeuvre.imageUrl" [alt]="oeuvre.titre | titlecase">
-    <button (click)="onViewOeuvre()">Plus d'informations</button>
-  </div>

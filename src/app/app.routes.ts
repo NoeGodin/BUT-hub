@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { OeuvreListComponent } from './oeuvre-list/oeuvre-list.component';
+import { OeuvreListComponent } from './galerie/oeuvre-list/oeuvre-list.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { OeuvreSingleComponent } from './oeuvre-single/oeuvre-single.component';
-import { OeuvreSuggestionComponent } from './oeuvre-suggestion/oeuvre-suggestion.component';
+import { OeuvreSingleComponent } from './galerie/oeuvre-single/oeuvre-single.component';
+import { OeuvreSuggestionComponent } from './galerie/oeuvre-suggestion/oeuvre-suggestion.component';
 
 export const routes: Routes = [
     { path: 'galerie/:id', component: OeuvreSingleComponent},

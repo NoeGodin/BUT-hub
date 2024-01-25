@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Oeuvre } from '../models/oeuvre.model';
-import { OeuvresService } from '../services/oeuvres.service';
+import { Oeuvre } from '../../models/oeuvre.model';
+import { OeuvresService } from '../../services/oeuvres.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';

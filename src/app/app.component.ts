@@ -1,7 +1,7 @@
 import { Component,LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { OeuvreListComponent } from "./oeuvre-list/oeuvre-list.component";
+import { OeuvreListComponent } from "./galerie/oeuvre-list/oeuvre-list.component";
 import { HeaderComponent } from "./header/header.component";
 import { registerLocaleData } from '@angular/common';
 import * as fr from '@angular/common/locales/fr';

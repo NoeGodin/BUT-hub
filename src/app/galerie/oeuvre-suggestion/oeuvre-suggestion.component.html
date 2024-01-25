@@ -19,6 +19,6 @@
     <label for="fileUpload">Choose a File</label>
     <input id="fileUpload" type="file" (change)="uploadFile($event)" name="file" #upload required>
 
-    <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid ? '#007bff' : '#ccc'}" [disabled]="!oeuvreForm.form.valid || !nouvelleOeuvre.imageUrl">Add Oeuvre</button>
+    <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid ? '#007bff' : '#ccc'}">Add Oeuvre</button>
   </form>
 </div>

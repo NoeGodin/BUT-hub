@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Oeuvre } from '../models/oeuvre.model';
-import { OeuvresService } from '../services/oeuvres.service';
+import { Oeuvre } from '../../models/oeuvre.model';
+import { OeuvresService } from '../../services/oeuvres.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AngularFireStorage } from '@angular/fire/compat/storage';

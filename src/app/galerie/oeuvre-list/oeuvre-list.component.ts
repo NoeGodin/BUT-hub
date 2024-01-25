@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Oeuvre } from '../models/oeuvre.model';
+import { Oeuvre } from '../../models/oeuvre.model';
 import { OeuvreComponent } from "../oeuvre/oeuvre.component";
-import { OeuvresService } from '../services/oeuvres.service';
+import { OeuvresService } from '../../services/oeuvres.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
