@@ -1,0 +1,25 @@
+<html>
+
+<head>
+  <title>Tetris Game</title>
+</head>
+
+<body>
+  <div class="game_board_wrap">
+    <div id="game_board"></div>
+    <div id="game_info_wrap">
+      <div id="game_info_buttons">
+        <button id="game_info_button_pause" (click)="pauseGame()">Pause</button>
+        <button id="game_info_button_new" (click)="gameInit()">Nouvelle partie</button>
+      </div>
+      <div id="game_info_level">Level: <span id="level">{{this.level}}</span></div>
+      <div id="game_info_score">Score: <span id="score">{{this.score}}</span></div>
+      <div id="game_info_lines">Lines: <span id="lines">{{this.lines}}</span></div>
+      <div id="game_info_next">Next:</div>
+      <div id="next_block">
+    </div>
+    </div>
+  </div>
+</body>
+
+</html>
