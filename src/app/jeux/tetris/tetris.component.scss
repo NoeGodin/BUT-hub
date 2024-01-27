@@ -31,6 +31,16 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
+#game_board h1  {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-shadow: 0 0 4px #000;
+    z-index: 1000;
+}
+
 #next_block {
     width: wrap-content;
     height: wrap-content;

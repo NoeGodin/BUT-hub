@@ -12,7 +12,6 @@ export class GamesComponent {
   constructor(private router: Router) {}
 
   playTetris(){
-    console.log("tetris");
     this.router.navigateByUrl('jeux/tetris');
   }
 }

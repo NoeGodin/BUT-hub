@@ -6,11 +6,11 @@
 
 <body>
   <div class="game_board_wrap">
-    <div id="game_board"></div>
+    <div id="game_board"><h1 *ngIf="gameOver" (click)="gameInit()">Jouer ?</h1></div>
     <div id="game_info_wrap">
       <div id="game_info_buttons">
-        <button id="game_info_button_pause" (click)="pauseGame()">Pause</button>
-        <button id="game_info_button_new" (click)="gameInit()">Nouvelle partie</button>
+        <button id="game_info_button_pause" (click)="pauseGame()"[attr.tabindex]="-1">Pause</button>
+        <button id="game_info_button_new" (click)="gameInit()" >Nouvelle partie</button>
       </div>
       <div id="game_info_level">Level: <span id="level">{{this.level}}</span></div>
       <div id="game_info_score">Score: <span id="score">{{this.score}}</span></div>

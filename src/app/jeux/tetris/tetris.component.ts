@@ -1,16 +1,17 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener,AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
 import { TetrominoesService  } from '../../services/tetrominoes';
 import { Tetromino } from '../../models/tetromino.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tetris',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   providers: [TetrominoesService],
   templateUrl: './tetris.component.html',
   styleUrl: './tetris.component.scss'
 })
-export class TetrisComponent implements OnInit {
+export class TetrisComponent implements AfterViewInit {
   BOARD_WIDTH: number = 10;
   BOARD_HEIGHT: number = 20;
   board: any[][] = [];
@@ -18,18 +19,27 @@ export class TetrisComponent implements OnInit {
   currentTetromino!: Tetromino;
   nextTetromino!: Tetromino;
   currentGhostTetromino!: Tetromino;
+  initialGameBoard!: string | undefined
   intervalId: any;
   level: number = 1;
   lines: number = 0;
   score: number = 0;
-  gameOver: boolean = false;
+  gameOver: boolean = true;
   pause: boolean = false;
 
-  constructor(private tetrominoesService: TetrominoesService) { }
 
-  ngOnInit() {
-     this.gameInit();
-     this.intervalId = setInterval(() => this.moveTetromino("down"), 500 / this.level);
+  constructor(private tetrominoesService: TetrominoesService,private el: ElementRef) { }
+
+  ngAfterViewInit(): void {
+    const buttons = this.el.nativeElement.getElementsByTagName('button');
+
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('keydown', (event: KeyboardEvent) => {
+        if (event.key === ' ') {
+          event.preventDefault();
+        }
+      });
+    }
   }
 
   gameInit() {
@@ -47,6 +57,8 @@ export class TetrisComponent implements OnInit {
     this.clearGameBoard();
     this.drawTetromino();
     this.drawNextTetromino();
+    clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => this.moveTetromino("down"), 500 / this.level);
   }
 
   pauseGame(){
@@ -137,7 +149,6 @@ clearGameBoard() {
           }
         }
       }
-      console.log(nextBlock);
     }
   }
 
@@ -198,7 +209,7 @@ clearGameBoard() {
           this.board[row][col] = this.currentTetromino.color;
         }
       }
-    }
+    } 
     let rowsCleared = this.clearRows();
     if (rowsCleared > 0) {
       this.lines += rowsCleared;
@@ -229,12 +240,10 @@ clearGameBoard() {
         }
       }
     }
-  
     return false; 
   }
 
   endGame() {
-    console.log('Game Over!');
     this.gameOver = true;
     clearInterval(this.intervalId);
   }
@@ -308,7 +317,6 @@ clearGameBoard() {
       }
       this.rotatedShape.push(row);
     }
-    console.log(this.rotatedShape);
     if (this.canTetrominoRotate()) {
       this.eraseTetromino();
       this.currentTetromino.shape = this.rotatedShape;
@@ -360,14 +368,13 @@ clearGameBoard() {
     }
     let row = this.currentTetromino.row;
     let col = this.currentTetromino.col;
-  
+    this.eraseTetromino();
     while (this.canTetrominoMove(1, 0)) {
-      this.eraseTetromino();
       row++;
       this.currentTetromino.col = col;
       this.currentTetromino.row = row;
-      this.drawTetromino();
     }
+    this.drawTetromino();
     this.lockTetromino();
   }
 

@@ -1,4 +1,4 @@
-<div class="oeuvre-card">
+<div class="oeuvre-card" [attr.id]="'oeuvre-' + oeuvre.id">
   <h2>{{ oeuvre.titre | titlecase }}</h2>
   <h4>{{ oeuvre.auteur | titlecase }}</h4>
   <p>{{ oeuvre.date }} - {{oeuvre.courant | titlecase}}</p>

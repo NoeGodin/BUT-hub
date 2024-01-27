@@ -27,7 +27,6 @@ export class OeuvreSuggestionComponent {
 
     this.oeuvresService.uploadFile(this.selectedFile)
       .then((downloadURLs) => {
-        console.log('Liens de téléchargement :', downloadURLs[0]);
         this.nouvelleOeuvre.imageUrl = downloadURLs[0];
         this.oeuvresService.addOeuvre(this.nouvelleOeuvre);
         this.nouvelleOeuvre = new Oeuvre();

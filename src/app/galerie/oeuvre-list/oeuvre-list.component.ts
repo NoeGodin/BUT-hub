@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Renderer2, ElementRef } from '@angular/core';
 import { Oeuvre } from '../../models/oeuvre.model';
 import { OeuvreComponent } from "../oeuvre/oeuvre.component";
 import { OeuvresService } from '../../services/oeuvres.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router  } from '@angular/router';
+import { ScrollPositionService } from '../../services/oeuvres.scroll.service';
 
 @Component({
     selector: 'app-oeuvre-list',
@@ -16,14 +17,40 @@ export class OeuvreListComponent implements OnInit{
   oeuvres !: Oeuvre[];
   alphabet: string[] = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
-  constructor(private oeuvresService: OeuvresService,private router: Router) { }
+  constructor(
+    private oeuvresService: OeuvresService,
+    private router: Router,
+    private scrollPositionService: ScrollPositionService,
+    private renderer: Renderer2,
+    private el: ElementRef
+  ) {}
 
   ngOnInit(): void {
     this.oeuvresService.getAllOeuvres().subscribe(oeuvres => {
-      console.log("oeuvres",oeuvres)
+      console.log("oeuvres", oeuvres);
       this.oeuvres = oeuvres;
       this.trierParTitre();
-    })
+
+      // Check if there is a last clicked oeuvre
+      const lastOeuvreClicked = this.scrollPositionService.getLastOeuvreClicked();
+      if (lastOeuvreClicked != null) {
+        // Wait for the view to be updated with the new data
+        setTimeout(() => {
+          this.scrollIntoView(lastOeuvreClicked);
+        });
+      }
+    });
+  }
+
+  private scrollIntoView(oeuvreId: string): void {
+    const element = document.getElementById(`oeuvre-${oeuvreId}`);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.router.events.subscribe().unsubscribe();
   }
 
   trierParTitre(): void {

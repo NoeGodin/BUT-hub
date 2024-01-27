@@ -4,6 +4,7 @@ import { OeuvresService } from '../../services/oeuvres.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {RouterModule} from '@angular/router';
+import { ScrollPositionService } from '../../services/oeuvres.scroll.service';
 
 
 @Component({
@@ -16,24 +17,23 @@ import {RouterModule} from '@angular/router';
 export class OeuvreSingleComponent implements OnInit {
   @Input() oeuvre!: Oeuvre;
   buttonText!: string;
+  scrollPosition!: number;
 
-  constructor(private oeuvresService: OeuvresService, private route: ActivatedRoute) {
+  constructor(private oeuvresService: OeuvresService, private route: ActivatedRoute,private scrollPositionService: ScrollPositionService) {
   }
 
   ngOnInit(): void {
     const oeuvreId = this.route.snapshot.params['id'];
     const likedOeuvres = this.oeuvresService.getLikedOeuvresFromLocalStorage();
     this.buttonText = likedOeuvres.includes(oeuvreId) ? "Je n'aime plus" : "J'aime !";
-
-    console.log("id de l'oeuvre cliqué :"+oeuvreId);
     this.oeuvresService.OeuvreById(oeuvreId).subscribe(oeuvre => {
-      console.log('Oeuvre data:', oeuvre);
       if (!oeuvre) {
         console.error('Oeuvre not found!');
         return;
       }
       this.oeuvre = oeuvre;
     });
+    this.scrollPositionService.setLastOeuvreClicked(oeuvreId);
   }
 
   onLike() {
