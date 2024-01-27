@@ -5,19 +5,38 @@
 </head>
 
 <body>
+  <h1>Tetris</h1>
   <div class="game_board_wrap">
-    <div id="game_board"><h1 *ngIf="gameOver" (click)="gameInit()">Jouer ?</h1></div>
-    <div id="game_info_wrap">
-      <div id="game_info_buttons">
-        <button id="game_info_button_pause" (click)="pauseGame()"[attr.tabindex]="-1">Pause</button>
-        <button id="game_info_button_new" (click)="gameInit()" >Nouvelle partie</button>
-      </div>
-      <div id="game_info_level">Level: <span id="level">{{this.level}}</span></div>
-      <div id="game_info_score">Score: <span id="score">{{this.score}}</span></div>
-      <div id="game_info_lines">Lines: <span id="lines">{{this.lines}}</span></div>
-      <div id="game_info_next">Next:</div>
-      <div id="next_block">
+    <div id="game_board">
+      <h1 *ngIf="firstGame" (click)="gameInit()">Jouer ?</h1>
+      <h1 *ngIf="gameOver" (click)="gameInit()">Rejouer ?</h1>
+      <h1 *ngIf="pause" (click)="pauseGame()" [attr.tabindex]="-1">Pause</h1>
     </div>
+    <div id="game_info_wrap">
+      <div id="game_info_next">Prochaine pièce:<div id="next_block"></div>
+      </div>
+      <div id="game_info_buttons">
+        <button id="game_info_button_pause" (click)="pauseGame()" [attr.tabindex]="-1">Pause</button>
+        <button id="game_info_button_new" (click)="gameInit()">Nouvelle partie</button>
+      </div>
+      <div id="game_tracker">
+        <div id="game_info_currentGame">
+          <div id="game_info_title">Stats:</div>
+          <div id="game_info_stats">
+            <div id="game_info_level">Level: <span id="level">{{this.level}}</span></div>
+            <div id="game_info_score">Score: <span id="score">{{this.score}}</span></div>
+            <div id="game_info_lines">Lignes: <span id="lines">{{this.lines}}</span></div>
+          </div>
+        </div>
+        <div id="game_info_bestGame">
+          <div id="game_info_title">Meilleur Partie:</div>
+          <div id="game_info_stats">
+            <div id="game_info_level">Level: <span id="level">{{this.level}}</span></div>
+            <div id="game_info_score">Score: <span id="score">{{this.score}}</span></div>
+            <div id="game_info_lines">Lignes: <span id="lines">{{this.lines}}</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </body>

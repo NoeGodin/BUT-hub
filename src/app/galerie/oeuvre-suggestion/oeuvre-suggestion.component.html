@@ -8,7 +8,7 @@
     <input type="text" id="auteur" [(ngModel)]="nouvelleOeuvre.auteur" name="auteur" required>
 
     <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="nouvelleOeuvre.description" name="description" required></textarea>
+    <textarea id="description" [(ngModel)]="nouvelleOeuvre.description" name="description" required rows="5"></textarea>
 
     <label for="date">Date:</label>
     <input type="text" id="date" [(ngModel)]="nouvelleOeuvre.date" name="date" required>
@@ -18,7 +18,8 @@
 
     <label for="fileUpload">Choose a File</label>
     <input id="fileUpload" type="file" (change)="uploadFile($event)" name="file" #upload required>
+    <div>{{fileStatus}}</div>
 
-    <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid ? '#007bff' : '#ccc'}">Add Oeuvre</button>
+    <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid&&selectedFile ? '#007bff' : '#ccc'}">Add Oeuvre</button>
   </form>
 </div>

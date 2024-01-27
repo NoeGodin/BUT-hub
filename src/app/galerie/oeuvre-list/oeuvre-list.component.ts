@@ -31,10 +31,8 @@ export class OeuvreListComponent implements OnInit{
       this.oeuvres = oeuvres;
       this.trierParTitre();
 
-      // Check if there is a last clicked oeuvre
       const lastOeuvreClicked = this.scrollPositionService.getLastOeuvreClicked();
       if (lastOeuvreClicked != null) {
-        // Wait for the view to be updated with the new data
         setTimeout(() => {
           this.scrollIntoView(lastOeuvreClicked);
         });

@@ -11,5 +11,29 @@
   html, body {
     height: 100%;
   }
-  
+
+  button {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background: #fff;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    transition: all 0.2s ease;
+
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+p {
+  font-weight: 300;
+  font-size: 16px;
+}
   

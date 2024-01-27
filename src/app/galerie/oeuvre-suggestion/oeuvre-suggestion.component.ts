@@ -16,6 +16,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 export class OeuvreSuggestionComponent {
   nouvelleOeuvre: Oeuvre = new Oeuvre();
   selectedFile: HTMLInputElement | undefined;
+  fileStatus: string | undefined;
 
   constructor(private oeuvresService: OeuvresService) {}
 
@@ -40,9 +41,21 @@ export class OeuvreSuggestionComponent {
   uploadFile(event: Event) {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
-      this.selectedFile = inputElement;
-    } else {
-      this.selectedFile = undefined;
+      const file = inputElement.files[0];
+      const allowedTypes = ['image/png', 'image/jpeg'];
+      const maxSize = 8 * 1024 * 1024; // 8 MB
+      if (!allowedTypes.includes(file.type)) {
+        this.fileStatus='Ce type de fichier n\'est pas autorisé';
+        this.selectedFile = undefined;
+        return;
+      }
+      if (file.size > maxSize) {
+        this.fileStatus='Ce fichier est trop lourd';
+        this.selectedFile = undefined;
+        return;
+      }
+        this.selectedFile = inputElement;
+        this.fileStatus='';
     }
   }
 
