@@ -1,17 +1,19 @@
-import { Component, HostListener, AfterViewInit, ElementRef, Renderer2 } from '@angular/core';
-import { TetrominoesService } from '../../services/tetrominoes';
+import { Component, HostListener, AfterViewInit, ElementRef, OnInit, Inject, OnDestroy } from '@angular/core';
+import { TetrominoesService } from '../../services/tetrominoes.service';
 import { Tetromino } from '../../models/tetromino.model';
 import { CommonModule } from '@angular/common';
+import { AuthenticationService } from '../../services/authentication.service';
+import { UsersService } from '../../services/users.service';
 
 @Component({
   selector: 'app-tetris',
   standalone: true,
   imports: [CommonModule],
-  providers: [TetrominoesService],
+  providers: [TetrominoesService,AuthenticationService],
   templateUrl: './tetris.component.html',
   styleUrl: './tetris.component.scss'
 })
-export class TetrisComponent implements AfterViewInit {
+export class TetrisComponent implements AfterViewInit, OnInit, OnDestroy{
   BOARD_WIDTH: number = 10;
   BOARD_HEIGHT: number = 20;
   board: any[][] = [];
@@ -24,12 +26,40 @@ export class TetrisComponent implements AfterViewInit {
   level: number = 1;
   lines: number = 0;
   score: number = 0;
+  bestScore: number = 0;
+  bestlines: number = 1;
+  bestlevel: number = 0;
   gameOver!: boolean;
   firstGame: boolean = true;
   pause: boolean = false;
 
 
-  constructor(private tetrominoesService: TetrominoesService, private el: ElementRef) { }
+  constructor(private tetrominoesService: TetrominoesService, private el: ElementRef, @Inject(AuthenticationService) private authenticationService: AuthenticationService, private userService: UsersService){}
+  
+  async ngOnInit(): Promise<void> {
+    if (await this.authenticationService.isLogged()) {
+      const userId = await this.authenticationService.getUserId();
+      if (userId == null) {
+        console.log("bug curieux mdr");
+      } else {
+        this.userService.UserById(userId).subscribe(user => {
+          if (user) {
+            this.bestScore = user?.games.tetris.score;
+            this.bestlines = user?.games.tetris.lignes;
+            this.bestlevel = user?.games.tetris.level;
+          }
+        });
+      }
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+    console.log("destroy");
+    //sauvegarder dans la bd
+  }
 
   ngAfterViewInit(): void {
     const buttons = this.el.nativeElement.getElementsByTagName('button');
@@ -69,12 +99,6 @@ export class TetrisComponent implements AfterViewInit {
       clearInterval(this.intervalId);
     } else {
       this.intervalId = setInterval(() => this.moveTetromino("down"), 500 / this.level);
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
     }
   }
 
@@ -256,6 +280,11 @@ export class TetrisComponent implements AfterViewInit {
     this.eraseGhostTetromino()
     this.gameOver = true;
     clearInterval(this.intervalId);
+    if (this.score > this.bestScore) {
+      this.bestScore = this.score;
+      this.bestlines = this.lines;
+      this.bestlevel = this.level;
+    }
   }
 
 

@@ -27,7 +27,6 @@ export class OeuvreListComponent implements OnInit{
 
   ngOnInit(): void {
     this.oeuvresService.getAllOeuvres().subscribe(oeuvres => {
-      console.log("oeuvres", oeuvres);
       this.oeuvres = oeuvres;
       this.trierParTitre();
 
@@ -65,6 +64,22 @@ export class OeuvreListComponent implements OnInit{
 
   ouvrirFormulaire(): void {
     this.router.navigateByUrl('suggestion');
+  }
+
+  getJson():void{
+    this.oeuvresService.getJson().subscribe(jsonString => {
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'oeuvres.json';
+      document.body.appendChild(a);
+      a.click();
+
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
   }
 
 }

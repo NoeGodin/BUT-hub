@@ -1,0 +1,55 @@
+<div id="container" *ngIf="!loading">
+  <h2>{{connexionType | titlecase }}</h2>
+  <form [formGroup]="MyGroup" *ngIf="connexionType=='inscription'" (ngSubmit)="register()" [ngClass]="{'shake': shakeFailed}">
+    <div class="floating">
+      <input id="input__email" class="floating__input" name="email" type="email" placeholder="bob@example.com"
+        formControlName="email" required/>
+      <label for="input__email" class="floating__label" data-content="Email">
+        <span class="hidden--visually">
+          Adresse mail</span></label>
+    </div>
+    <div class="floating">
+      <input id="input__pseudo" class="floating__input" name="pseudo" type="text"
+        placeholder="Pseudo" formControlName="pseudo" required/>
+      <label for="input__pseudo" class="floating__label" data-content="Pseudo">
+        <span class="hidden--visually">
+          Mot de passe</span></label>
+    </div>
+    <div class="floating">
+      <input id="input__password" class="floating__input" name="password" type="password" placeholder="Password"
+        formControlName="password" required/>
+      <label for="input__password" class="floating__label" data-content="Mot de passe">
+        <span class="hidden--visually">
+          Mot de passe</span></label>
+    </div>
+    <div id="btn">
+      <button type="submit" [ngStyle]="{'background-color': MyGroup.valid? '#007bff' : '#ccc'}">S'inscrire</button>
+    </div>
+  </form>
+  <form [formGroup]="MyGroup" *ngIf="connexionType=='connexion'" (ngSubmit)="signIn()" [ngClass]="{'shake': shakeFailed}">
+    <div class="floating" >
+      <input id="input__email" class="floating__input" name="email" type="email" placeholder="bob@example.com"
+        formControlName="email" required />
+      <label for="input__email" class="floating__label" data-content="Email">
+        <span class="hidden--visually">
+          Adresse mail</span></label>
+    </div>
+    <div class="floating">
+      <input id="input__password" class="floating__input" name="password" type="password" placeholder="Password"
+        formControlName="password" required/>
+      <label for="input__password" class="floating__label" data-content="Mot de passe">
+        <span class="hidden--visually">
+          Mot de passe</span></label>
+    </div>
+    <div id="btn">
+      <button type="submit" [ngStyle]="{'background-color': MyGroup.valid? '#007bff' : '#ccc'}">Se connecter</button>
+    </div>
+  </form>
+  <p (click)="switchMode()">Cliquez ici si vous souhaitez vous {{connexionType=='inscription'?'connecter':'inscrire'}}
+  </p>
+</div>
+<div class="loader" *ngIf="loading">
+  <div class="inner one"></div>
+  <div class="inner two"></div>
+  <div class="inner three"></div>
+</div>

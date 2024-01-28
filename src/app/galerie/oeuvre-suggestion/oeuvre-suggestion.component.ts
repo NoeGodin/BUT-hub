@@ -3,7 +3,6 @@ import { Oeuvre } from '../../models/oeuvre.model';
 import { OeuvresService } from '../../services/oeuvres.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
   selector: 'app-oeuvre-suggestion',
@@ -43,7 +42,7 @@ export class OeuvreSuggestionComponent {
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
       const allowedTypes = ['image/png', 'image/jpeg'];
-      const maxSize = 8 * 1024 * 1024; // 8 MB
+      const maxSize = 8 * 1024 * 1024;
       if (!allowedTypes.includes(file.type)) {
         this.fileStatus='Ce type de fichier n\'est pas autorisé';
         this.selectedFile = undefined;

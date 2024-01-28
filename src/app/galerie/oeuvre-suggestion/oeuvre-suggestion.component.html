@@ -17,7 +17,7 @@
     <input type="text" id="courant" [(ngModel)]="nouvelleOeuvre.courant" name="courant" required>
 
     <label for="fileUpload">Choose a File</label>
-    <input id="fileUpload" type="file" (change)="uploadFile($event)" name="file" #upload required>
+    <input id="fileUpload" type="file" (change)="uploadFile($event)" name="file" accept="image/png, image/jpeg" #upload required>
     <div>{{fileStatus}}</div>
 
     <button type="submit" [ngStyle]="{'background-color': oeuvreForm.form.valid&&selectedFile ? '#007bff' : '#ccc'}">Add Oeuvre</button>

@@ -11,6 +11,7 @@ import { Storage, getDownloadURL, ref, uploadBytesResumable } from '@angular/fir
   providedIn: 'root'
 })
 export class OeuvresService {
+
   oeuvres$: Observable<Oeuvre[]>;
   private storage: Storage = inject(Storage);
 
@@ -22,6 +23,33 @@ export class OeuvresService {
   getAllOeuvres(): Observable<Oeuvre[]> {
     return this.oeuvres$;
   }
+
+  getJson(): Observable<string> {
+    return this.oeuvres$.pipe(
+      map(oeuvres => {
+        const jsonResult = {
+          oeuvres: {} as { [id: string]: Oeuvre }
+        };
+
+        for (const oeuvre of oeuvres) {
+          jsonResult.oeuvres[oeuvre.id] = {
+            id: oeuvre.id,
+            titre: oeuvre.titre,
+            auteur: oeuvre.auteur,
+            imageUrl: oeuvre.imageUrl,
+            description: oeuvre.description,
+            date: oeuvre.date,
+            courant: oeuvre.courant,
+            like: oeuvre.like
+          };
+        }
+
+        const jsonString = JSON.stringify(jsonResult, null, 2);
+        return jsonString;
+      })
+    );
+  }
+
 
   OeuvreById(oeuvreId: string): Observable<Oeuvre | undefined> {
     return this.oeuvres$.pipe(

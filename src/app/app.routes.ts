@@ -5,6 +5,7 @@ import { OeuvreSingleComponent } from './galerie/oeuvre-single/oeuvre-single.com
 import { OeuvreSuggestionComponent } from './galerie/oeuvre-suggestion/oeuvre-suggestion.component';
 import { GamesComponent } from './jeux/games/games.component';
 import { TetrisComponent } from './jeux/tetris/tetris.component';
+import { ConnexionComponent } from './connexion/connexion.component';
 
 export const routes: Routes = [
     { path: 'galerie/:id', component: OeuvreSingleComponent},
@@ -13,6 +14,7 @@ export const routes: Routes = [
     { path: 'suggestion', component: OeuvreSuggestionComponent},
     { path: 'jeux', component: GamesComponent},
     { path: 'jeux/tetris', component: TetrisComponent},
+    { path: 'login', component: ConnexionComponent}
 
 ];
 
