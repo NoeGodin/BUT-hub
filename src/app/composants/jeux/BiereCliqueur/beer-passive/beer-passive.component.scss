@@ -1,0 +1,8 @@
+.hover-value {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.list-group-item:hover .hover-value {
+  opacity: 1;
+}

@@ -1,0 +1,18 @@
+<div id="counter" class="container">
+  <h1>Comptoir de Bar</h1>
+  <button
+    id="beerButton"
+    (click)="moreBeers(); bierreAnimation($event)"
+    class="btn btn-success mb-3"
+  >
+    +{{ user.ClickValue }} Bières
+  </button>
+  <button
+    (click)="upgradeClickValue()"
+    class="btn mb-3"
+    [class.btn-danger]="!isAffordable(coutAmelioration)"
+    [class.btn-primary]="isAffordable(coutAmelioration)"
+  >
+    améliorer le clic: {{ this.coutAmelioration }} Bières
+  </button>
+</div>

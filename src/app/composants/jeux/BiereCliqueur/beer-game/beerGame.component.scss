@@ -1,0 +1,37 @@
+#container {
+  height: 90vh;
+  overflow: hidden;
+  background-image: linear-gradient(
+    to bottom,
+    #fffb84,
+    #fffb7a,
+    #fffb6f,
+    #fffa64,
+    #fffa58,
+    #f9f14e,
+    #f2e944,
+    #ece03a,
+    #decd31,
+    #cfba28,
+    #c0a820,
+    #b19618
+  );
+}
+
+#stats {
+  font-size: 130%;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+  width: fit-content;
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+#stats p {
+  margin-bottom: 10px;
+}
+
+#stats strong {
+  color: #81620a;
+}

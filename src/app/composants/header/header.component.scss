@@ -1,0 +1,39 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #eee;
+  padding: 10px;
+  height: 10vh;
+}
+
+#branding {
+  text-align: center;
+}
+
+nav {
+  text-align: center;
+}
+
+#connection {
+  text-align: right;
+}
+
+#connection a {
+  color: blue;
+}
+
+a {
+  margin: 0 10px;
+  color: #333;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.active {
+  color: #666;
+  text-decoration: underline;
+}

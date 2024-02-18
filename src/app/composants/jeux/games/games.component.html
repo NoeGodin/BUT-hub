@@ -1,0 +1,21 @@
+<h3 id="titre" *ngIf="!logged">
+  Connectez-vous pour sauvegarder vos données sur plusieurs appareils
+</h3>
+<div class="games-container">
+  <div class="game" (click)="playTetris()">
+    <h1>Tetris</h1>
+    <p>Meilleur Score : {{ scoreTetris }}</p>
+  </div>
+  <div class="game">
+    <h1>Démineur</h1>
+    <p>Meilleur Temps :</p>
+  </div>
+  <div class="game" (click)="playBeerGame()">
+    <h1>BièreCliqueur</h1>
+    <p></p>
+  </div>
+  <div class="game">
+    <h1>Indisponible</h1>
+    <p></p>
+  </div>
+</div>
