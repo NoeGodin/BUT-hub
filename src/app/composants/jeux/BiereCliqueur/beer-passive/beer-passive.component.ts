@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { playerService } from '../../../../services/beerClickerUser.service';
+import { beerClickerUser } from '../../../../services/beerClickerUser.service';
 import { CommonModule } from '@angular/common';
 import { Beer } from '../../../../models/beer.model';
 import { BeerService } from '../../../../services/beer.service';
@@ -20,7 +20,7 @@ export class BeerPassiveComponent {
   valeurPassive: number = 0;
 
   constructor(
-    private userService: playerService,
+    private userService: beerClickerUser,
     private beerService: BeerService
   ) {
     this.beersOnCounter = this.beerService.getBeerCounter();

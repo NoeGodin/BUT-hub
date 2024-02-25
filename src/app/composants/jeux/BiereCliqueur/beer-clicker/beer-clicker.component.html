@@ -5,14 +5,14 @@
     (click)="moreBeers(); bierreAnimation($event)"
     class="btn btn-success mb-3"
   >
-    +{{ user.ClickValue }} Bières
+    +{{ user.clickValue }} Bières
   </button>
   <button
     (click)="upgradeClickValue()"
     class="btn mb-3"
-    [class.btn-danger]="!isAffordable(coutAmelioration)"
-    [class.btn-primary]="isAffordable(coutAmelioration)"
+    [class.btn-danger]="!isAffordable(this.userService.clickUpgradeCost())"
+    [class.btn-primary]="isAffordable(this.userService.clickUpgradeCost())"
   >
-    améliorer le clic: {{ this.coutAmelioration }} Bières
+    améliorer le clic: {{ this.userService.clickUpgradeCost() }} Bières
   </button>
 </div>

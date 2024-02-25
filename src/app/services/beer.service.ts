@@ -1,15 +1,41 @@
 import BigNumber from 'bignumber.js';
-import { playerService } from './beerClickerUser.service';
+import { beerClickerUser } from './beerClickerUser.service';
 import { Beer } from '../models/beer.model';
 import { Injectable } from '@angular/core';
+import { UsersService } from './users.service';
+import { AuthenticationService } from './authentication.service';
 @Injectable()
 export class BeerService {
   beerCounter: Beer[] = [];
   availableBeers: Beer[] = [];
   allBeers: Beer[] = this.fetchBeerFactories();
 
-  constructor(private playerService: playerService) {
+  constructor(
+    private playerService: beerClickerUser,
+    private userService: UsersService,
+    private authenticationService: AuthenticationService
+  ) {
     this.availableBeers.push(this.allBeers[0]);
+    this.initUser();
+  }
+
+  async initUser() {
+    if (await this.authenticationService.isLogged()) {
+      const userId = await this.authenticationService.getUserId();
+      if (userId == null) {
+        console.log('bug curieux mdr');
+      } else {
+        this.userService.UserById(userId).subscribe((user) => {
+          if (user) {
+            Object.assign(this.beerCounter, user.games.beerClicker.beers);
+            for (const beer of this.beerCounter) {
+              console.log(beer);
+              beer.startInterval(this.changeBeerNumber.bind(this));
+            }
+          }
+        });
+      }
+    }
   }
 
   fetchBeerFactories(): Beer[] {

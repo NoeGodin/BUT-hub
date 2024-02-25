@@ -1,14 +1,40 @@
 import BigNumber from 'bignumber.js';
 import { BeerClickerUser } from '../models/beerClickerUser.model';
+import { UsersService } from './users.service';
+import { AuthenticationService } from './authentication.service';
 
-declare type Timeout = ReturnType<typeof setTimeout>;
-
-export class playerService {
+import { Injectable } from '@angular/core';
+@Injectable()
+export class beerClickerUser {
   user: BeerClickerUser;
+  coutAmelioration: BigNumber;
 
-  constructor() {
-    this.user = new BeerClickerUser('Noé', BigNumber(0), BigNumber(5));
+  constructor(
+    private userService: UsersService,
+    private authenticationService: AuthenticationService
+  ) {
+    this.user = { beers: new BigNumber(0), clickValue: new BigNumber(1) };
+    this.coutAmelioration = this.user.clickValue.times(100);
+    this.initUser();
   }
+
+  async initUser() {
+    if (await this.authenticationService.isLogged()) {
+      const userId = await this.authenticationService.getUserId();
+      if (userId == null) {
+        console.log('bug curieux mdr');
+      } else {
+        this.userService.UserById(userId).subscribe((user) => {
+          if (user) {
+            Object.assign(this.user, user.games.beerClicker.beerUser);
+            this.coutAmelioration = this.user.clickValue.times(100);
+            console.log(this.user);
+          }
+        });
+      }
+    }
+  }
+
   getUser(): BeerClickerUser {
     return this.user;
   }
@@ -18,7 +44,7 @@ export class playerService {
       .integerValue(BigNumber.ROUND_DOWN);
   }
   beerClick() {
-    this.changeBeerNumber(this.user.ClickValue);
+    this.changeBeerNumber(this.user.clickValue);
   }
   isAffordable(cost: BigNumber): boolean {
     return this.user.beers.isGreaterThanOrEqualTo(cost);
@@ -26,9 +52,9 @@ export class playerService {
   upgradeClickValue() {
     if (!this.isAffordable(this.clickUpgradeCost())) return;
     this.changeBeerNumber(this.clickUpgradeCost().negated());
-    this.user.ClickValue = this.user.ClickValue.times(2);
+    this.user.clickValue = this.user.clickValue.times(2);
   }
   clickUpgradeCost(): BigNumber {
-    return this.user.ClickValue.times(100);
+    return this.coutAmelioration;
   }
 }

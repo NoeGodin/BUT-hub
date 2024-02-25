@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { playerService } from '../../../../services/beerClickerUser.service';
+import { beerClickerUser } from '../../../../services/beerClickerUser.service';
 import { CommonModule } from '@angular/common';
 import { BeerService } from '../../../../services/beer.service';
 import { BeerClickerUser } from '../../../../models/beerClickerUser.model';
@@ -16,11 +16,9 @@ import BigNumber from 'bignumber.js';
 })
 export class BeerClickerComponent {
   user: BeerClickerUser;
-  coutAmelioration: BigNumber;
   beerImages: HTMLImageElement[] = [];
-  constructor(private userService: playerService) {
+  constructor(public userService: beerClickerUser) {
     this.user = userService.getUser();
-    this.coutAmelioration = userService.clickUpgradeCost();
 
     for (let i = 1; i <= 5; i++) {
       const image = document.createElement('img');
@@ -34,7 +32,6 @@ export class BeerClickerComponent {
   }
   upgradeClickValue() {
     this.userService.upgradeClickValue();
-    this.coutAmelioration = this.userService.clickUpgradeCost();
   }
   isAffordable(cost: BigNumber): boolean {
     return this.userService.isAffordable(cost);

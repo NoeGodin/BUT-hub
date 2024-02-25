@@ -1,13 +1,11 @@
 import { BigNumber } from 'bignumber.js';
 
 export class BeerClickerUser {
-  userName!: string;
   beers!: BigNumber;
-  ClickValue!: BigNumber;
+  clickValue!: BigNumber;
 
-  constructor(name: string, beers: BigNumber, clickValue: BigNumber) {
-    this.userName = name;
+  constructor(beers: BigNumber, clickValue: BigNumber) {
     this.beers = beers;
-    this.ClickValue = clickValue;
+    this.clickValue = clickValue;
   }
 }

@@ -6,6 +6,7 @@ import {
   OnInit,
   Inject,
   OnDestroy,
+  ViewEncapsulation,
 } from '@angular/core';
 import { TetrominoesService } from '../../../services/tetrominoes.service';
 import { Tetromino } from '../../../models/tetromino.model';
@@ -20,6 +21,7 @@ import { UsersService } from '../../../services/users.service';
   providers: [TetrominoesService, AuthenticationService],
   templateUrl: './tetris.component.html',
   styleUrl: './tetris.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class TetrisComponent implements AfterViewInit, OnInit, OnDestroy {
   BOARD_WIDTH: number = 10;
@@ -166,11 +168,6 @@ export class TetrisComponent implements AfterViewInit, OnInit, OnDestroy {
           block.style.backgroundColor = this.currentTetromino.color;
           block.style.top = (this.currentTetromino.row + r) * 24 + 'px';
           block.style.left = (this.currentTetromino.col + c) * 24 + 'px';
-          block.style.height = '24px';
-          block.style.width = '24px';
-          block.style.position = 'absolute';
-          block.style.border = '1px solid black';
-          block.style.boxShadow = 'inset 3px 3px 0 rgba(255, 255, 255, 0.5)';
           block.setAttribute(
             'id',
             `block-${this.currentTetromino.row + r}-${
@@ -198,11 +195,6 @@ export class TetrisComponent implements AfterViewInit, OnInit, OnDestroy {
             block.style.backgroundColor = this.nextTetromino.color;
             block.style.top = r * 24 + 'px';
             block.style.left = c * 24 + 'px';
-            block.style.height = '24px';
-            block.style.width = '24px';
-            block.style.position = 'absolute';
-            block.style.border = '1px solid black';
-            block.style.boxShadow = 'inset 3px 3px 0 rgba(255, 255, 255, 0.5)';
             nextBlock.appendChild(block);
           }
         }
@@ -368,12 +360,6 @@ export class TetrisComponent implements AfterViewInit, OnInit, OnDestroy {
               block.style.backgroundColor = this.board[row][col];
               block.style.top = row * 24 + 'px';
               block.style.left = col * 24 + 'px';
-              block.style.height = '24px';
-              block.style.width = '24px';
-              block.style.position = 'absolute';
-              block.style.border = '1px solid black';
-              block.style.boxShadow =
-                'inset 3px 3px 0 rgba(255, 255, 255, 0.5)';
               block.setAttribute('id', `block-${row}-${col}`);
               if (gameBoard) {
                 gameBoard.appendChild(block);
@@ -476,11 +462,6 @@ export class TetrisComponent implements AfterViewInit, OnInit, OnDestroy {
           block.style.backgroundColor = color;
           block.style.top = (row + r) * 24 + 'px';
           block.style.left = (col + c) * 24 + 'px';
-          block.style.height = '24px';
-          block.style.width = '24px';
-          block.style.position = 'absolute';
-          block.style.border = '1px solid black';
-          block.style.boxShadow = 'inset 3px 3px 0 rgba(255, 255, 255, 0.5)';
           block.setAttribute('id', `ghost-${row + r}-${col + c}`);
           const gameBoard = document.getElementById('game_board');
           if (gameBoard) {
