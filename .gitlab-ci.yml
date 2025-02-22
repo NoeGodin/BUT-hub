@@ -29,9 +29,9 @@ build:
 deploy:
   stage: deploy
   script:
-    - cp dist/index.html dist/404.html
+    - cp dist/noe-dev/browser/index.html dist/noe-dev/browser/404.html
   artifacts:
     paths:
-      - dist/
+      - dist/noe-dev/browser/
   only:
     - master
