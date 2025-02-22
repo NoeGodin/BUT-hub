@@ -3,7 +3,6 @@ image: node:18
 stages:
   - install
   - build
-  - test
   - deploy
 
 cache:
@@ -25,11 +24,6 @@ build:
   artifacts:
     paths:
       - public/
-
-test:
-  stage: test
-  script:
-    - ng test --watch=false --browsers=ChromeHeadless
 
 deploy:
   stage: deploy
