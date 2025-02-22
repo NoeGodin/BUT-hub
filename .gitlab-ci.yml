@@ -20,18 +20,29 @@ install:
 build:
   stage: build
   script:
-    - ng build --configuration=production --output-path=dist/
-    - ls -la dist/
+    - ng build --configuration=production
+    - ls -la dist/noe-dev/browser/
   artifacts:
     paths:
-      - dist/
+      - dist/noe-dev/browser/
 
 deploy:
   stage: deploy
   script:
-    - cp dist/browser/index.html dist/browser/404.html
+    - cp dist/noe-dev/browser/index.html dist/noe-dev/browser/404.html
   artifacts:
     paths:
-      - dist/browser/
+      - dist/noe-dev/browser/
+  only:
+    - master
+
+pages:
+  stage: deploy
+  script:
+    - mkdir -p public
+    - cp -r dist/noe-dev/browser/* public/
+  artifacts:
+    paths:
+      - public
   only:
     - master
