@@ -33,4 +33,4 @@ deploy:
     paths:
       - public/
   only:
-    - main
+    - master
