@@ -27,8 +27,6 @@ build:
 
 deploy:
   stage: deploy
-  script:
-    - cp public/index.html public/404.html  # Fix for SPA routing
   artifacts:
     paths:
       - public/
