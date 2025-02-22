@@ -4,6 +4,7 @@ stages:
   - install
   - build
   - test
+  - deploy
 
 cache:
   paths:
@@ -20,7 +21,22 @@ install:
 build:
   stage: build
   script:
-    - ng build --configuration=production
+    - ng build --configuration=production --output-path=public
   artifacts:
     paths:
-      - dist/
+      - public/
+
+test:
+  stage: test
+  script:
+    - ng test --watch=false --browsers=ChromeHeadless
+
+deploy:
+  stage: deploy
+  script:
+    - cp public/index.html public/404.html  # Fix for SPA routing
+  artifacts:
+    paths:
+      - public/
+  only:
+    - main
