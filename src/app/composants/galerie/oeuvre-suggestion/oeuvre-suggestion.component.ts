@@ -59,6 +59,6 @@ export class OeuvreSuggestionComponent {
   }
 
   onSubmit() {
-    this.ajouterOeuvre();
+    //this.ajouterOeuvre();
   }
 }
