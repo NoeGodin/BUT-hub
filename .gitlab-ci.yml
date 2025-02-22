@@ -20,15 +20,18 @@ install:
 build:
   stage: build
   script:
-    - ng build --configuration=production --output-path=public
+    - ng build --configuration=production --output-path=dist/
+    - ls -la dist/
   artifacts:
     paths:
-      - public/
+      - dist/
 
 deploy:
   stage: deploy
+  script:
+    - cp dist/index.html dist/404.html
   artifacts:
     paths:
-      - public/
+      - dist/
   only:
     - master
