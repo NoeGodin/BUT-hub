@@ -1,0 +1,26 @@
+image: node:18
+
+stages:
+  - install
+  - build
+  - test
+
+cache:
+  paths:
+    - node_modules/
+
+before_script:
+  - npm install -g @angular/cli
+
+install:
+  stage: install
+  script:
+    - npm install
+
+build:
+  stage: build
+  script:
+    - ng build --configuration=production
+  artifacts:
+    paths:
+      - dist/
