@@ -1,12 +1,12 @@
 export const environment = {
   production: false,
-  firebaseConfig: {
-    apiKey: '${FIREBASE_API_KEY}',
-    authDomain: '${FIREBASE_AUTH_DOMAIN}',
-    projectId: '${FIREBASE_PROJECT_ID}',
-    storageBucket: '${FIREBASE_STORAGE_BUCKET}',
-    messagingSenderId: '${FIREBASE_MESSAGING_SENDER_ID}',
-    appId: '${FIREBASE_APP_ID}',
-    measurementId: '${FIREBASE_MEASUREMENT_ID}',
+  firebaseConfig : {
+    apiKey: "AIzaSyBIluPbVit2Zf5ekbBwwxu-Mpz-B8_tSWg",
+    authDomain: "noe-dev-d5835.firebaseapp.com",
+    projectId: "noe-dev-d5835",
+    storageBucket: "noe-dev-d5835.appspot.com",
+    messagingSenderId: "115488525817",
+    appId: "1:115488525817:web:ade2725f1dda21ab5b4128",
+    measurementId: "G-ZMVMPJ45RC"
   },
 };
