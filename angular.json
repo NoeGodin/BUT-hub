@@ -54,6 +54,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/BUT-hub/",
               "budgets": [
                 {
                   "type": "initial",
